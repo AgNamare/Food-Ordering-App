@@ -17,7 +17,7 @@ const createCurrentUser = async( req: Request, res: Response) => {
     
   } catch (error) {
     console.log(error);
-    res.status(500).json({message: "Error creating user"});b 
+    res.status(500).json({message: "Error creating user"});
   }
 };
 
