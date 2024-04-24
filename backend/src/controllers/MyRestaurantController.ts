@@ -74,7 +74,7 @@ const updateMyRestaurant = async (req: Request, res: Response) => {
   }
 };
 
-const uploadImage = async (file: Express.multer.file) => {
+const uploadImage = async (file: Express.Multer.File) => {
   const image = file;
   //creating a base 64 string based on the image buffer
   const base64Image = Buffer.from(image.buffer).toString("base64");
