@@ -4,6 +4,7 @@ import cors from "cors";
 import "dotenv/config";
 import myUserRoute from "./routes/MyUserRoutes";
 import myRestaurantRoute from "./routes/MyRestaurantRoutes";
+import restaurantRoute from "./routes/RestaurantRoute";
 import { v2 as cloudinary } from "cloudinary";
 
 mongoose
@@ -35,6 +36,7 @@ app.use(cors(corsOptions));
 
 app.use("/api/my/user", myUserRoute);
 app.use("/api/my/restaurant", myRestaurantRoute);
+app.use("/api/restaurant", restaurantRoute)
 
 app.listen(5000, () => {
   console.log("Server started on port 5000");

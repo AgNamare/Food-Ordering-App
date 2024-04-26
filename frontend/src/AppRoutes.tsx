@@ -9,7 +9,7 @@ import ManageRestaurantPage from "./pages/ManageRestaurantPage";
 const AppRoutes = ()=>{
   return(
     <Routes>
-      <Route path="/" element={<Layout><Homepage /></Layout>} />
+      <Route path="/" element={<Layout showHero><Homepage /></Layout>} />
       
       <Route element={<ProtectedRoute/>}>
         <Route path="/user-profile" element={<Layout showHero><UserProfilePage/></Layout>} />
