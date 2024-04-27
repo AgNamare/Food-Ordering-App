@@ -3,10 +3,13 @@ import Restaurant from "../models/restaurant";
 
 const searchRestaurant = async (req: Request, res: Response) => {
   try {
+    console.log(req.params);
     const city = req.params.city;
 
     const searchQuery = (req.query.searchQuery as string) || "";
     const selectedCuisines = (req.query.selectedCuisines as string) || "";
+    console.log(req.query.selectedCuisines);
+    console.log(selectedCuisines);
     const sortOption = (req.query.sortOption as string) || "lastUpdated";
     const page = parseInt(req.query.page as string) || 1;
 
@@ -20,8 +23,8 @@ const searchRestaurant = async (req: Request, res: Response) => {
         pagination: {
           total: 0,
           page: 1,
-          pages: 1
-        }
+          pages: 1,
+        },
       });
     }
 
@@ -30,7 +33,8 @@ const searchRestaurant = async (req: Request, res: Response) => {
         .split(",")
         .map((cuisine) => new RegExp(cuisine, "i"));
 
-      query["cuisine"] = { $all: cuisinesArray };
+      console.log(cuisinesArray);
+      query["cuisines"] = { $all: cuisinesArray };
     }
 
     if (searchQuery) {
@@ -55,19 +59,19 @@ const searchRestaurant = async (req: Request, res: Response) => {
     const response = {
       data: restaurants,
       pagination: {
-        total, 
+        total,
         page,
-        pages:Math.ceil(total/pageSize)
-      }
-    }
+        pages: Math.ceil(total / pageSize),
+      },
+    };
 
-    res.json(response)
+    res.json(response);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
 
-export default{
-  searchRestaurant
-}
+export default {
+  searchRestaurant,
+};
