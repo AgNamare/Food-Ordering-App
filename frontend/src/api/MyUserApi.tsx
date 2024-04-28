@@ -6,7 +6,7 @@ import { toast } from "sonner";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useGetMyUser = () => {
-  const { getAccessTokenSilently} = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
 
   const getMyUserRequest = async (): Promise<User> => {
     const accessToken = await getAccessTokenSilently();
@@ -15,69 +15,76 @@ export const useGetMyUser = () => {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json"
-      }
-    })
+        "Content-Type": "application/json",
+      },
+    });
 
-    if(!response.ok) {
+    if (!response.ok) {
       throw new Error("Failed to fetch user");
     }
 
     return response.json();
+  };
+
+  const {
+    data: currentUser,
+    isLoading,
+    error,
+  } = useQuery("fetchCurrentUser", getMyUserRequest);
+
+  if (error) {
+    toast.error(error.toString());
   }
 
-  const {data: currentUser, isLoading, error} = useQuery("fetchCurrentUser", getMyUserRequest)
+  return { currentUser, isLoading };
+};
 
-  if(error) {
-    toast.error(error.toString())
-  }
-
-  return {currentUser, isLoading};
-}
-
-type CreateUserRequest ={
-  auth0Id: string,
-  email: String
-}
+type CreateUserRequest = {
+  auth0Id: string;
+  email: String;
+};
 
 export const useCreateMyUser = () => {
-  const {getAccessTokenSilently} = useAuth0();
-  
-  const createMyUserRequest = async(user: CreateUserRequest) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const createMyUserRequest = async (user: CreateUserRequest) => {
     const accessToken = await getAccessTokenSilently();
     const response = await fetch(`${API_BASE_URL}/api/my/user`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type" : "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify(user),
     });
 
-    if(!response.ok) {
-      throw new Error("Failed to create user")
-    }  
-  }
+    if (!response.ok) {
+      throw new Error("Failed to create user");
+    }
+  };
 
-  const {mutateAsync: createUser, isLoading, isError, isSuccess,} = useMutation(createMyUserRequest)
+  const {
+    mutateAsync: createUser,
+    isLoading,
+    isSuccess,
+  } = useMutation(createMyUserRequest);
 
-  return{
+  return {
     createUser,
     isLoading,
-    isError,
-    isSuccess
-  }
-}
+    isSuccess,
+  };
+};
 
 type updateMyUserRequest = {
-  name: string,
-  addressLine1: string,
-  city: string,
-  country: string
-}
+  name: string;
+  addressLine1: string;
+  city: string;
+  country: string;
+};
 
 export const useUpdateMyUser = () => {
-  const { getAccessTokenSilently} = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
 
   const updateMyUserRequest = async (formData: updateMyUserRequest) => {
     const accessToken = await getAccessTokenSilently();
@@ -85,23 +92,30 @@ export const useUpdateMyUser = () => {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(formData),
     });
-    console.log(response)
+    console.log(response);
 
     if (!response.ok) {
       throw new Error("Failed to update user");
     }
 
-    return response.json()
-  }
+    return response.json();
+  };
 
-  const {mutateAsync: updateUser, isSuccess, isLoading, isError, error, reset} = useMutation(updateMyUserRequest)
+  const {
+    mutateAsync: updateUser,
+    isSuccess,
+    isLoading,
+    isError,
+    error,
+    reset,
+  } = useMutation(updateMyUserRequest);
 
-  if(isSuccess) {
-    toast.success("User profile updated")
+  if (isSuccess) {
+    toast.success("User profile updated");
   }
 
   if (error) {
@@ -109,5 +123,5 @@ export const useUpdateMyUser = () => {
     reset();
   }
 
-  return {updateUser, isLoading}
-}
+  return { updateUser, isLoading };
+};
