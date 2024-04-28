@@ -5,7 +5,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "dev": "nodemon",
-    "build": "npm install && npx tsc",
+    "build": "npm install && npx tsc --outDir ./build",
     "start": "node src/backend/dist/index.js"
   },
   "keywords": [],
