@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "npm install && npx tsc --outDir ./build",
-    "start": "node src/backend/dist/index.js"
+    "start": "node backend/dist/index.js"
   },
   "keywords": [],
   "author": "",
