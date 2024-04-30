@@ -4,6 +4,7 @@ import cors from "cors";
 import "dotenv/config";
 import myUserRoute from "./routes/MyUserRoutes";
 import myRestaurantRoute from "./routes/MyRestaurantRoutes";
+import paymentRoute from "./routes/PaymentRoute";
 import restaurantRoute from "./routes/RestaurantRoute";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -26,9 +27,9 @@ app.use(cors());
 
 // Define CORS options
 const corsOptions: cors.CorsOptions = {
-  origin: "*", // Allow requests from any origin (you may want to restrict this in production)
-  methods: ["GET", "POST", "PUT", "DELETE"], // Allow specified HTTP methods
-  allowedHeaders: ["Content-Type", "Authorization"], // Allow specified headers
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 // Use CORS with options
@@ -36,7 +37,8 @@ app.use(cors(corsOptions));
 
 app.use("/api/my/user", myUserRoute);
 app.use("/api/my/restaurant", myRestaurantRoute);
-app.use("/api/restaurant", restaurantRoute)
+app.use("/api/restaurant", restaurantRoute);
+app.use("/api/payment", paymentRoute);
 
 app.listen(5000, () => {
   console.log("Server started on port 5000");
