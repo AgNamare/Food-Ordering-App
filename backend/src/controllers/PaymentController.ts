@@ -18,13 +18,15 @@ const PaymentController = async (req: CustomRequest, res: Response) => {
         },
         body: JSON.stringify({
           ShortCode: "4214086",
-          ConfirmationURL: "https://bytes-frontend-htww.onrender.com/search/manchester",
+          ConfirmationURL:
+            "https://bytes-frontend-htww.onrender.com/search/manchester",
         }),
       }
     );
 
     if (!response.ok) {
-      return res.status(500).json({ message: "Something went wrong!" });
+      console.log(response);
+      return res.status(500).json({ message: "Something went wrong1" });
     }
     return response;
   } catch (error) {
