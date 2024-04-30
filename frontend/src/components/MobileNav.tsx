@@ -7,6 +7,11 @@ import MobileNavLinks from "./MobileNavLinks"
 
 const MobileNav = () => {
   const { isAuthenticated, loginWithRedirect, user} = useAuth0();
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const mpesaTest = async()=> {
+    await fetch(`${API_BASE_URL}/payment/mpesa`)
+  }
   return (
     <Sheet>
       <SheetTrigger>
@@ -28,6 +33,7 @@ const MobileNav = () => {
               onClick={()=> loginWithRedirect()} 
               className="flex-1 font-bold bg-orange-500">Log In</Button>
           )}
+          <Button onClick={mpesaTest} >MPESA TEST</Button>
         </SheetDescription>
       </SheetContent>
     </Sheet>
