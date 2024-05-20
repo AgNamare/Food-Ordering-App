@@ -22,6 +22,7 @@ const Homepage = () => {
           searchQuery=""
           onSubmit={handleSearchSubmit}
         />
+        <div className="">e.g manchester</div>
       </div>
       <div className="grid md-grid-cols-2 gap-5">
         <img src={landingImage} />
